@@ -1,4 +1,4 @@
-let selected_products = document.querySelector("table");
+let selected_products = document.getElementById("table");
 
 Add_Items = (e) => {
     let productName = e.parentElement.firstChild.nextElementSibling.innerText;
@@ -21,8 +21,12 @@ Add_Items = (e) => {
 }
 document.addEventListener('DOMContentLoaded',ShowProducts);
 function ShowProducts() {
-    let ProductTable = [];
     
+    while (selected_products.firstChild){
+         selected_products.removeChild(selected_products.firstChild);
+    }
+
+    let ProductTable = [];
     if(localStorage.getItem('Products') === null){
         ProductTable = [];
     }
@@ -57,8 +61,31 @@ function ShowProducts() {
 selected_products.addEventListener('click', removeItem);
 function removeItem(e) {
     if (e.target.innerText == "Remove") {
-        e.target.parentElement.remove();
+        //e.target.parentElement.remove();
+        let element = e.target.parentElement;
+        let name = e.target.parentElement.firstChild.innerText;
+
+        let table = JSON.parse(localStorage.getItem('Products'));
+        let i = 0, j = 0;
+        let newTable = [];
+        table.forEach(e => {
+            console.log(table[i]);
+            if(name != e){
+                newTable[j] = table[i];
+                j += 1;
+            }  
+            i += 1;    
+        })
+        console.log("previous: ", table);
+        console.log("new: ", newTable);
+
+        localStorage.clear()
+        localStorage.setItem('Products', JSON.stringify(newTable));
+        ShowProducts();
+
+       
     }
+    
 }
 
 
