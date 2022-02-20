@@ -2,11 +2,39 @@ let selected_products = document.querySelector("table");
 
 Add_Items = (e) => {
     let productName = e.parentElement.firstChild.nextElementSibling.innerText;
-    console.log("Selected Product: ", productName);
+    let ProductTable = [];
+    
+    if(localStorage.getItem('Products') === null){
+        ProductTable = [];
+    }
+    else {
+        ProductTable = JSON.parse(localStorage.getItem('Products'));
+    }
+
+    ProductTable.push(productName);
+    localStorage.setItem('Products', JSON.stringify(ProductTable));
+
+    console.log("Selected Product: ", ProductTable);
+
+    ShowProducts();
+
+}
+document.addEventListener('DOMContentLoaded',ShowProducts);
+function ShowProducts() {
+    let ProductTable = [];
+    
+    if(localStorage.getItem('Products') === null){
+        ProductTable = [];
+    }
+    else {
+        ProductTable = JSON.parse(localStorage.getItem('Products'));
+    }
+
+    ProductTable.forEach(product => {
 
     let tr = document.createElement('tr');
     let td1 = document.createElement('td');
-    td1.innerHTML = productName;
+    td1.innerHTML = product;
     tr.appendChild(td1);
 
     let td2 = document.createElement('td');
@@ -22,6 +50,8 @@ Add_Items = (e) => {
     tr.appendChild(btn);
 
     selected_products.appendChild(tr);
+    })
+    
 }
 
 selected_products.addEventListener('click', removeItem);
@@ -30,3 +60,5 @@ function removeItem(e) {
         e.target.parentElement.remove();
     }
 }
+
+
