@@ -61,7 +61,7 @@ function ShowProducts() {
         tr.appendChild(td1);
 
         let td2 = document.createElement('td');
-        td2.innerHTML = "120";
+        td2.innerHTML = "120 tk";
         tr.appendChild(td2);
 
         let td3 = document.createElement('td');
